@@ -119,6 +119,8 @@ RUN nodeenv /edx/app/edxapp/nodeenv --node=16.14.0 --prebuilt
 RUN npm install -g npm@8.5.x
 COPY package.json package.json
 COPY package-lock.json package-lock.json
+# Set npm timeout settings before installing dependencies
+RUN npm config set fetch-timeout 120000 && npm config set fetch-retry-maxtimeout 120000
 RUN npm set progress=false && npm install
 
 # The builder-development stage is a temporary stage that installs python modules required for development purposes
